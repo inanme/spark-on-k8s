@@ -9,9 +9,11 @@ object EstimatePi {
       .appName("estimate-pi")
       .getOrCreate()
 
+    val sc = spark.sparkContext
+
     val NUM_SAMPLES = 1000000
 
-    val count = spark.sparkContext
+    val count = sc
       .parallelize(1 to NUM_SAMPLES)
       .filter { _ =>
         val x = math.random
@@ -22,6 +24,6 @@ object EstimatePi {
 
     println(s"Pi is roughly ${4.0 * count / NUM_SAMPLES}")
 
-    spark.stop()
+    sc.stop()
   }
 }
