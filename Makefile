@@ -28,3 +28,9 @@ spark-base-image:
 	cd spark && docker build -t inanme/spark:${spark-version} -f kubernetes/dockerfiles/spark/Dockerfile .
 	rm -rf spark.tgz spark/
 	docker push inanme/spark:${spark-version}
+
+
+get-data:
+	wget http://data.githubarchive.org/2015-03-01-{0..23}.json.gz -P data/
+	gunzip data/*
+	git clone git@github.com:spark-in-action/first-edition.git spark-in-action
