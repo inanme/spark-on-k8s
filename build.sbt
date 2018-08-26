@@ -18,3 +18,9 @@ libraryDependencies ++= Seq(
   "org.apache.spark" %% "spark-catalyst" % sparkVersion,
   "com.datastax.spark" %% "spark-cassandra-connector" % sparkVersion
 )
+
+import scalariform.formatter.preferences._
+scalariformPreferences := scalariformPreferences.value
+  .setPreference(AlignSingleLineCaseStatements, true)
+  .setPreference(DoubleIndentConstructorArguments, true)
+  .setPreference(DanglingCloseParenthesis, Preserve)

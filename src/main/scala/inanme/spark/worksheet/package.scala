@@ -1,12 +1,15 @@
 package inanme.spark
 
-import org.apache.log4j.{Level, Logger}
+import org.apache.log4j.{ Level, Logger }
+import org.apache.spark.SparkContext
 import org.apache.spark.sql.SparkSession
 
 package object worksheet {
-  val logger = Logger.getLogger("scalaWorksheet")
-  val spark = SparkSession.builder
-    .master("spark://menter:7077")
+  val master = "spark://menter:7077"
+  val masterLocal = "local[2]"
+  val logger: Logger = Logger.getLogger("scalaWorksheet")
+  val spark: SparkSession = SparkSession.builder
+    .master(masterLocal)
     .appName("scalaWorksheet")
     .config("spark.ui.showConsoleProgress", false)
     .config("spark.submit.deployMode", "cluster")
@@ -16,7 +19,10 @@ package object worksheet {
     //.config("spark.driver.extraJavaOptions", "-Dlog4j.configuration=my-spark_2.11-0.jar#log4j.properties")
     .getOrCreate()
 
-  val sc = spark.sparkContext
+  println(spark.version)
+  //println(spark.conf.getAll.foreach(println))
+
+  val sc: SparkContext = spark.sparkContext
 
   Runtime.getRuntime.addShutdownHook(new Thread() {
     override def run(): Unit = spark.close
